@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-from streamlit.hashing import _CodeHasher
+from hashlib import blake2b
 from types import SimpleNamespace
 
 # Класс для сохранения переменных между запросами Streamlit
