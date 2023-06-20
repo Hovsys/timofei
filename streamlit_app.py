@@ -1,4 +1,4 @@
-mport streamlit as st
+import streamlit as st
 
 st.subheader('Convert Image to English letter')
 image_file = st.file_uploader('Choose the ASL Image', ['jpg', 'png'])
