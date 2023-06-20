@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import streamlit as st
 from PIL import Image
-
+import time
 
 def capture_image():
     st.subheader('Capture an image')
