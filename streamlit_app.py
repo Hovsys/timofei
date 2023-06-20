@@ -22,9 +22,6 @@ def capture_image():
     # Обработка изображения и вывод результата
     # Конвертация кадра в изображение Pillow
     image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
-    # Обработка изображения и вывод результата
-    letter = preprocess_image(np.array(image), None, best_model, label_binarizer)
-    st.write(f'The image is predicted as {letter}')
 
 # Функция для загрузки нескольких изображений
 def upload_images():
