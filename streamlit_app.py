@@ -28,8 +28,8 @@ def upload_images():
 
 
 # Создание веб-приложения
-st.title('ASL Recognition App')
-option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
+st.title('')
+option = st.sidebar.selectbox('Select an option', ('Посмотреть изображение', 'загрузить изображение'))
 
 if option == 'Capture an image':
     capture_image()
