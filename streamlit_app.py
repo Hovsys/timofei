@@ -4,15 +4,13 @@ import streamlit as st
 from PIL import Image
 
 
-# Функция для захвата изображения с камеры
 def capture_image():
     st.subheader('Capture an image')
-    start_button = st.button('Включить камеру')
-    stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
+    start_button = st.button('Посмотреть изображения')
+    stop_button = st.button('Скрыть изображения', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
 
-    
-
+ 
 
 # Функция для загрузки нескольких изображений
 def upload_images():
