@@ -10,13 +10,13 @@ def capture_image():
     run_button = st.button('Run')
     stop_button = st.button('Stop', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
-    
-    # Запрос на доступ к камере
-    camera = cv2.VideoCapture(1)
+
+    # Открыть первую доступную камеру
+    camera = cv2.VideoCapture(0)
     if not camera.isOpened():
         st.error('Unable to Access Camera')
         return
-    
+
     while run_button:
         _, frame = camera.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -28,6 +28,7 @@ def capture_image():
     if stop_button is not None:
         stop_button.disabled = True
     run_button = st.button('Run', key='run_capture', disabled=False)
+
 
 # Функция для загрузки нескольких изображений
 def upload_images():
