@@ -7,15 +7,21 @@ from PIL import Image
 # Функция для захвата изображения с камеры
 def capture_image():
     st.subheader('Capture an image')
-    run = st.checkbox('Run')
+    run_button = st.button('Run')
+    stop_button = st.button('Stop', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
     camera = cv2.VideoCapture(0)
-    while run:
+    while run_button:
         _, frame = camera.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         FRAME_WINDOW.image(frame)
+        stop_button.disabled = False
+        run_button = st.button('Run', key='run_capture', disabled=True)
     camera.release()
- 
+    stop_button.disabled = True
+    run_button = st.button('Run', key='run_capture', disabled=False)
+
+
 # Функция для загрузки нескольких изображений
 def upload_images():
     st.subheader('Convert images to English sentence')
