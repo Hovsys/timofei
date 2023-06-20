@@ -14,7 +14,7 @@ if st.button('Show Image'):
 # Отображение изображения, если флаг установлен в True
 if show_image and uploaded_file is not None:
     image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image', use_column_width=True)
+    st.image(image, caption='', use_column_width=True)
 
 # Кнопка для скрытия изображения
 if show_image and st.button('Hide Image'):
