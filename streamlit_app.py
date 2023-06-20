@@ -4,14 +4,30 @@ import streamlit as st
 from PIL import Image
 
 
+# Функция для захвата изображения с камеры
 def capture_image():
     st.subheader('Capture an image')
     start_button = st.button('Включить камеру')
     stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
 
-    if start_button:
-        stop_button.disabled = False
+    # Открыть первую доступную камеру
+    camera = cv2.VideoCapture(0)
+    if not camera.isOpened():
+        st.error('Unable to Access Camera')
+        return
+
+    while start_button:
+        _, frame = camera.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        FRAME_WINDOW.image(frame)
+        if stop_button is not None:
+            stop_button.disabled = False
+        start_button = st.button('Включить камеру', key='run_capture', disabled=True)
+    camera.release()
+    if stop_button is not None:
+        stop_button.disabled = True
+    start_button = st.button('Включить камеру', key='run_capture', disabled=False)
 
 
 # Функция для загрузки нескольких изображений
