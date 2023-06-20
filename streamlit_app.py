@@ -11,7 +11,7 @@ show_image = False
 show_image_container = st.empty()
 
 # Обновление контейнера с помощью метода container.button()
-if show_image_container.button('Show Image', key='show_image_button') and uploaded_file is not None:
+if show_image_container.button('Show Image', key='show_image_button_' + str(show_image)) and uploaded_file is not None:
     show_image = True
 
 # Отображение изображения, если флаг установлен в True
@@ -20,7 +20,7 @@ if show_image:
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
     # Кнопка для скрытия изображения
-    if st.button('Hide Image', key='hide_image_button'):
+    if st.button('Hide Image', key='hide_image_button_' + str(show_image)):
         show_image = False
 
     # Скрытие кнопки "Show Image", если изображение отображается
@@ -28,4 +28,4 @@ if show_image:
 
 # Показать кнопку "Show Image", если изображение не отображается
 if not show_image and uploaded_file is not None:
-    show_image_container.button('Show Image', key='show_image_button')
+    show_image_container.button('Show Image', key='show_image_button_' + str(show_image))
