@@ -6,18 +6,15 @@ import time
 
 def capture_image():
     st.subheader('Capture an image')
-    start_button = st.button('Включить камеру', key='start_capture', disabled=True)
-    stop_button = st.button('Сделать снимок', key=f'stop_capture_{time.time()}', disabled=True)
+    start_button = st.button('Включить камеру',)
+    stop_button = st.button('Сделать снимок',)
     FRAME_WINDOW = st.image([])
 
     if start_button:
-        stop_button.disabled = False
-    
+       
+
     if stop_button:
-        # Здесь можно написать код для захвата изображения
-        pass
-    else:
-        start_button.disabled = True
+       
 
 # Функция для загрузки нескольких изображений
 def upload_images():
