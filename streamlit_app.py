@@ -17,7 +17,7 @@ show_image = False
 show_image_container = st.empty()
 
 # Обновление контейнера с помощью метода container.button()
-if show_image_container.button('Show Image', key='show_image_button_' + str(show_image)) and len(images) > 0:
+if show_image_container.button('Включить камеру', key='show_image_button_' + str(show_image)) and len(images) > 0:
     show_image = True
 
 # Индекс текущего изображения
@@ -29,15 +29,15 @@ if show_image:
 
     # Кнопки для переключения между изображениями
     col1, col2, col3 = st.columns(3)
-    if col2.button('Сделать фото', key='previous_button'):
+    if col2.button('Сделать фото жеста', key='previous_button'):
         current_image_index = (current_image_index - 1) % len(images)
-    if col2.button('следующий жест', key='next_button'):
+    if col2.button('Следующий    жест', key='next_button'):
         current_image_index = (current_image_index + 1) % len(images)
 
     # Кнопки для отмены последней буквы и выключения камеры
-    if col3.button('Undo Last Letter', key='undo_button'):
+    if col3.button('Удалить последнюю букву', key='undo_button'):
         st.write('Undo Last Letter Button Clicked')
-    if col3.button('Turn Off Camera', key='camera_button'):
+    if col3.button('Выключить  режим  фото', key='camera_button'):
         st.write('Turn Off Camera Button Clicked')
 
     # Скрытие кнопки "Show Image", если изображение отображается
