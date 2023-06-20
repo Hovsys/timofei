@@ -1,4 +1,5 @@
 import streamlit as st
+import random
 from PIL import Image
 
 # Загрузка изображений
@@ -37,7 +38,7 @@ if show_image:
 
 # Отображение кнопки "Show Image", если изображение скрыто
 if not show_image:
-    show_image_container.button('Show Image', key='show_image_button_' + str(show_image))
+    show_image_container.button('Show Image', key='show_image_button_' + str(show_image) + str(random.randint(0, 100000)))
 
 # Скрытие кнопки "Show Image", если изображение отображается
 if show_image:
