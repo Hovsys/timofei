@@ -6,16 +6,33 @@ from PIL import Image
 
 # Функция для захвата изображения с камеры
 def capture_image():
-    st.subheader('1')
+    st.subheader('Capture an image')
     start_button = st.button('Включить камеру')
     stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
 
- 
+    # Открыть первую доступную камеру
+    camera = cv2.VideoCapture(0)
+    if not camera.isOpened():
+        st.error('Unable to Access Camera')
+        return
+
+    while start_button:
+        _, frame = camera.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        FRAME_WINDOW.image(frame)
+        if stop_button is not None:
+            stop_button.disabled = False
+        start_button = st.button('Включить камеру', key='run_capture', disabled=True)
+    camera.release()
+    if stop_button is not None:
+        stop_button.disabled = True
+    start_button = st.button('Включить камеру', key='run_capture', disabled=False)
+
 
 # Функция для загрузки нескольких изображений
 def upload_images():
-    st.subheader('2')
+    st.subheader('Convert images to English sentence')
     sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files=True)
 
     if len(sentence_image_files) > 0:
@@ -29,7 +46,7 @@ def upload_images():
 
 
 # Создание веб-приложения
-st.title('3')
+st.title('ASL Recognition App')
 option = st.sidebar.selectbox('Select an option', ('1', '2'))
 
 if option == 'Capture an image':
