@@ -33,6 +33,12 @@ if show_image:
         current_image_index = (current_image_index - 1) % len(images)
     if col2.button('Next', key='next_button'):
         current_image_index = (current_image_index + 1) % len(images)
+        show_image = True
 
-    # Скрытие кнопки "Show Image", если изображение отображается
+# Отображение кнопки "Show Image", если изображение скрыто
+if not show_image:
+    show_image_container.button('Show Image', key='show_image_button_' + str(show_image))
+
+# Скрытие кнопки "Show Image", если изображение отображается
+if show_image:
     show_image_container.empty()
