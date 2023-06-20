@@ -29,7 +29,7 @@ def upload_images():
 
 
 # Создание веб-приложения
-st.title('')
+st.title('3')
 option = st.sidebar.selectbox('Select an option', ('1', '2'))
 
 if option == 'Capture an image':
