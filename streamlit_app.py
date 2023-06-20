@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
-
+ 
+st.title('Режим фотографии')
 
 # Загрузка изображений
 uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True, key='image_uploader')
@@ -12,7 +13,7 @@ for uploaded_file in uploaded_files:
     image = Image.open(uploaded_file)
     images.append(image)
     
- st.title('Режим фотографии')
+
 
 # Флаг для отображения/скрытия изображения
 show_image = False
