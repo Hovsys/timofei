@@ -27,9 +27,7 @@ def capture_image():
 
 # Создание веб-приложения
 st.title('')
-option = st.sidebar.selectbox('Select an option', ('Просмотр изображения', 'Загрузка изображения'))
 
-if option == 'Просмотр изображения':
     capture_image()
 else:
     upload_images()
