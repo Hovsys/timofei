@@ -23,16 +23,16 @@ if show_image_container.button('Show Image', key='show_image_button_' + str(show
 # Индекс текущего изображения
 current_image_index = 0
 
+# Кнопки для переключения между изображениями
+col1, col2, col3, col4 = st.columns([1, 2, 1, 1])
+if col2.button('Previous', key='previous_button'):
+    current_image_index = (current_image_index - 1) % len(images)
+if col4.button('Next', key='next_button'):
+    current_image_index = (current_image_index + 1) % len(images)
+
 # Отображение изображения, если флаг установлен в True
 if show_image:
     st.image(images[current_image_index], caption='Uploaded Image', use_column_width=True)
-
-    # Кнопки для переключения между изображениями
-    col1, col2, col3 = st.columns(3)
-    if col2.button('Previous', key='previous_button'):
-        current_image_index = (current_image_index - 1) % len(images)
-    if col2.button('Next', key='next_button'):
-        current_image_index = (current_image_index + 1) % len(images)
 
     # Кнопки для отмены последней буквы и выключения камеры
     if col1.button('Undo Last Letter', key='undo_button'):
