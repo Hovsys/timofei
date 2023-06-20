@@ -29,9 +29,9 @@ if show_image:
 
     # Кнопки для переключения между изображениями
     col1, col2, col3 = st.columns(3)
-    if col2.button('Previous', key='previous_button'):
+    if col2.button('Сделать фото', key='previous_button'):
         current_image_index = (current_image_index - 1) % len(images)
-    if col2.button('Next', key='next_button'):
+    if col2.button('следующий жест', key='next_button'):
         current_image_index = (current_image_index + 1) % len(images)
 
     # Кнопки для отмены последней буквы и выключения камеры
