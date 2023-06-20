@@ -1,50 +1,37 @@
-import streamlit as st
 import cv2
-from PIL import Image
 import numpy as np
+import streamlit as st
+from PIL import Image
 
-# Функция для загрузки изображения
-def load_image(image_file):
-    img = Image.open(image_file)
-    return img
-
-# Функция для обработки изображения и получения результата
-def preprocess_image(image, model, binarizer):
-    # ... код обработки изображения ...
-    return result
-
-# Загружаем страницу
-def app():
-    st.title('ASL to English Translation')
-
-    # Добавляем возможность загрузки изображения с компьютера
-    st.subheader('Translate ASL Image to English Letter')
-    image_file = st.file_uploader('Choose the ASL Image', ['jpg', 'jpeg', 'png'])
-    if image_file is not None:
-        image = load_image(image_file)
-        image = np.array(image, dtype='float32')
-        letter = preprocess_image(image, model, binarizer)
-        st.write(f'The image is predicted as {letter}')
-
-    # Добавляем возможность получения изображения с веб-камеры
-    st.subheader('Capture Image from Webcam')
-    run = st.checkbox('Run')
+def capture_image():
+    st.subheader('Capture an image')
     FRAME_WINDOW = st.image([])
     camera = cv2.VideoCapture(0)
-    while run:
+    while True:
         _, frame = camera.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         FRAME_WINDOW.image(frame)
-        if st.button("Capture"):
-            cv2.imwrite('captured_image.png', frame)
-            image = load_image('captured_image.png')
-            image = np.array(image, dtype='float32')
-            letter = preprocess_image(image, model, binarizer)
-            st.write(f'The image is predicted as {letter}')
-            st.success("Image captured!")
-        if st.button("Quit"):
-            run = False
+        if st.button('Capture'):
+            break
     camera.release()
 
-if __name__ == '__main__':
-    app()
+def upload_images():
+    st.subheader('Convert images to English sentence')
+    sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files=True)
+
+    if len(sentence_image_files) > 0:
+        sentence = ''
+        for image_file in sentence_image_files:
+            image = Image.open(image_file).convert('L')
+            image = np.array(image, dtype='float32')
+            letter = preprocess_image(image, image_file, best_model, label_binarizer)
+            sentence += letter
+        st.write(f'The sentence is predicted as {sentence}')
+
+st.title('ASL Recognition App')
+option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
+
+if option == 'Capture an image':
+    capture_image()
+else:
+    upload_images()
