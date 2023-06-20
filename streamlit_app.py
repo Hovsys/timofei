@@ -13,10 +13,6 @@ def preprocess_image(image, model, binarizer):
     # ... код обработки изображения ...
     return result
 
-# Загружаем модель и бинаризатор
-model = load_model()
-binarizer = load_binarizer()
-
 # Загружаем страницу
 def app():
     st.title('ASL to English Translation')
