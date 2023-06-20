@@ -28,7 +28,7 @@ if show_image:
     st.image(images[current_image_index], caption='Uploaded Image', use_column_width=True)
 
     # Кнопки для переключения между изображениями
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3 = st.columns(3)
     if col2.button('Previous', key='previous_button'):
         current_image_index = (current_image_index - 1) % len(images)
     if col2.button('Next', key='next_button'):
