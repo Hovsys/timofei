@@ -18,19 +18,17 @@ def get_camera_image():
 def capture_image():
     st.subheader('Capture an image')
     run_button = st.button('Run')
-    stop_button = st.button('Stop', key='stop_capture', disabled=True)
+    stop_button = st.button('Stop', key='stop_capture', visible=False)
     FRAME_WINDOW = st.image([])
-    
+
     while run_button:
         img = get_camera_image()
         frame = Image.open(img)
         FRAME_WINDOW.image(frame)
-        if stop_button is not None:
-            stop_button.disabled = False
-        run_button = st.button('Run', key='run_capture', disabled=True)
-    if stop_button is not None:
-        stop_button.disabled = True
-    run_button = st.button('Run', key='run_capture', disabled=False)
+        stop_button.visible = True
+        run_button = st.button('Run', key='run_capture', visible=False)
+    stop_button.visible = False
+    run_button = st.button('Run', key='run_capture', visible=True)
 
 # Создание веб-приложения
 st.title('ASL Recognition App')
