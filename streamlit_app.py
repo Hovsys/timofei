@@ -23,6 +23,5 @@ if show_image:
     if st.button('Hide Image', key='hide_image_button_' + str(show_image)):
         show_image = False
 
-# Показать кнопку "Show Image", если изображение не отображается
-if not show_image and uploaded_file is not None:
-    show_image_container.button('Show Image', key='show_image_button_' + str(show_image))
+    # Скрытие кнопки "Show Image", если изображение отображается
+    show_image_container.empty()
