@@ -7,8 +7,8 @@ from PIL import Image
 # Функция для захвата изображения с камеры
 def capture_image():
     st.subheader('Capture an image')
-    run_button = st.button('Run')
-    stop_button = st.button('Stop', key='stop_capture', disabled=True)
+    start_button = st.button('Включить камеру')
+    stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
 
     # Открыть первую доступную камеру
@@ -17,17 +17,17 @@ def capture_image():
         st.error('Unable to Access Camera')
         return
 
-    while run_button:
+    while start_button:
         _, frame = camera.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         FRAME_WINDOW.image(frame)
         if stop_button is not None:
             stop_button.disabled = False
-        run_button = st.button('Run', key='run_capture', disabled=True)
+        start_button = st.button('Включить камеру', key='run_capture', disabled=True)
     camera.release()
     if stop_button is not None:
         stop_button.disabled = True
-    run_button = st.button('Run', key='run_capture', disabled=False)
+    start_button = st.button('Включить камеру', key='run_capture', disabled=False)
 
 
 # Функция для загрузки нескольких изображений
