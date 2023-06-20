@@ -1,8 +1,18 @@
-import cv2
-import numpy as np
+import io
+import time
+import requests
+import json
+import base64
 import streamlit as st
 from PIL import Image
 
+# Запрос на получение изображения с камеры
+def get_camera_image():
+    url = 'http://<your-android-device-ip>:8080/shot.jpg'
+    response = requests.get(url)
+    img = response.content
+    img = io.BytesIO(img)
+    return img
 
 # Функция для захвата изображения с камеры
 def capture_image():
@@ -11,38 +21,16 @@ def capture_image():
     stop_button = st.button('Stop', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
     
-    # Запрос на доступ к камере
-    camera = cv2.VideoCapture(0)
-    if not camera.isOpened():
-        st.error('Unable to Access Camera')
-        return
-    
     while run_button:
-        _, frame = camera.read()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        img = get_camera_image()
+        frame = Image.open(img)
         FRAME_WINDOW.image(frame)
         if stop_button is not None:
             stop_button.disabled = False
         run_button = st.button('Run', key='run_capture', disabled=True)
-    camera.release()
     if stop_button is not None:
         stop_button.disabled = True
     run_button = st.button('Run', key='run_capture', disabled=False)
-
-# Функция для загрузки нескольких изображений
-def upload_images():
-    st.subheader('Convert images to English sentence')
-    sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files=True)
-
-    if len(sentence_image_files) > 0:
-        sentence = ''
-        for image_file in sentence_image_files:
-            image = Image.open(image_file).convert('L')
-            image = np.array(image, dtype='float32')
-            letter = preprocess_image(image, image_file, best_model, label_binarizer)
-            sentence += letter
-        st.write(f'The sentence is predicted as {sentence}')
-
 
 # Создание веб-приложения
 st.title('ASL Recognition App')
