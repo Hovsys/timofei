@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import streamlit as st
 from PIL import Image
+import permissions
 
 
 # Функция для захвата изображения с камеры
@@ -10,6 +11,14 @@ def capture_image():
     run_button = st.button('Run')
     stop_button = st.button('Stop', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
+    
+    # Запрос на доступ к камере
+    try:
+        permissions.Camera()
+    except permissions.PermissionError:
+        st.error('Permission to access camera was not granted')
+        return
+    
     camera_indexes = [i for i in range(10)]
     cameras = [cv2.VideoCapture(index, cv2.CAP_DSHOW) for index in camera_indexes]
     available_cameras = [index for index, camera in enumerate(cameras) if camera.isOpened()]
