@@ -2,14 +2,7 @@ import streamlit as st
 from PIL import Image
 
 # Загрузка изображений
-uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True)
-
-# Список с загруженными изображениями
-import streamlit as st
-from PIL import Image
-
-# Загрузка изображений
-uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True)
+uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True, key='image_uploader')
 
 # Список с загруженными изображениями
 images = []
