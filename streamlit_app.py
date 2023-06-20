@@ -6,7 +6,7 @@ from PIL import Image
 
 # Функция для захвата изображения с камеры
 def capture_image():
-    st.subheader('Capture an image')
+    st.subheader('1')
     start_button = st.button('Включить камеру')
     stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
@@ -15,7 +15,7 @@ def capture_image():
 
 # Функция для загрузки нескольких изображений
 def upload_images():
-    st.subheader('Convert images to English sentence')
+    st.subheader('2')
     sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files=True)
 
     if len(sentence_image_files) > 0:
@@ -30,7 +30,7 @@ def upload_images():
 
 # Создание веб-приложения
 st.title('')
-option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
+option = st.sidebar.selectbox('Select an option', ('1', '2'))
 
 if option == 'Capture an image':
     capture_image()
