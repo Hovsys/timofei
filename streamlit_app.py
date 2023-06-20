@@ -5,6 +5,13 @@ from PIL import Image
 uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True)
 
 # Список с загруженными изображениями
+import streamlit as st
+from PIL import Image
+
+# Загрузка изображений
+uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True)
+
+# Список с загруженными изображениями
 images = []
 for uploaded_file in uploaded_files:
     image = Image.open(uploaded_file)
@@ -33,6 +40,12 @@ if show_image:
         current_image_index = (current_image_index - 1) % len(images)
     if col2.button('Next', key='next_button'):
         current_image_index = (current_image_index + 1) % len(images)
+
+    # Кнопки для отмены последней буквы и выключения камеры
+    if col1.button('Undo Last Letter', key='undo_button'):
+        st.write('Undo Last Letter Button Clicked')
+    if col3.button('Turn Off Camera', key='camera_button'):
+        st.write('Turn Off Camera Button Clicked')
 
     # Скрытие кнопки "Show Image", если изображение отображается
     show_image_container.empty()
