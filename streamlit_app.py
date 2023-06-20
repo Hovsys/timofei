@@ -41,6 +41,6 @@ if show_image:
         st.write('Turn Off Camera Button Clicked')
 
     st.markdown('Полеченный перевод:')
-
+    st.subheader('Режим фотографии')
     # Скрытие кнопки "Show Image", если изображение отображается
     show_image_container.empty()
