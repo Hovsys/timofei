@@ -1,14 +1,18 @@
 import streamlit as st
 from PIL import Image
 
+
 # Загрузка изображений
 uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True, key='image_uploader')
+
 
 # Список с загруженными изображениями
 images = []
 for uploaded_file in uploaded_files:
     image = Image.open(uploaded_file)
     images.append(image)
+    
+ st.title('Режим фотографии')
 
 # Флаг для отображения/скрытия изображения
 show_image = False
@@ -41,6 +45,6 @@ if show_image:
         st.write('Turn Off Camera Button Clicked')
 
     st.markdown('Полеченный перевод:')
-    st.subheader('Режим фотографии')
+   
     # Скрытие кнопки "Show Image", если изображение отображается
     show_image_container.empty()
