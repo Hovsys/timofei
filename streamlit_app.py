@@ -10,7 +10,9 @@ def capture_image():
     run_button = st.button('Run')
     stop_button = st.button('Stop', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
-    camera = cv2.VideoCapture(0)
+    num_cameras = cv2.VideoCapture.getCameraCount()
+    camera_index = st.selectbox('Select a camera', range(num_cameras))
+    camera = cv2.VideoCapture(camera_index)
     if not camera.isOpened():
         st.error('Cannot open camera')
         return
