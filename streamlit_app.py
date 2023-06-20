@@ -15,12 +15,13 @@ def capture_image():
         _, frame = camera.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         FRAME_WINDOW.image(frame)
-        stop_button.disabled = False
+        if stop_button is not None:
+            stop_button.disabled = False
         run_button = st.button('Run', key='run_capture', disabled=True)
     camera.release()
-    stop_button.disabled = True
+    if stop_button is not None:
+        stop_button.disabled = True
     run_button = st.button('Run', key='run_capture', disabled=False)
-
 
 # Функция для загрузки нескольких изображений
 def upload_images():
