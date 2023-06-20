@@ -12,7 +12,7 @@ def capture_image():
     FRAME_WINDOW = st.image([])
     
     # Запрос на доступ к камере
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(1)
     if not camera.isOpened():
         st.error('Unable to Access Camera')
         return
