@@ -17,7 +17,8 @@ show_image = False
 show_image_container = st.empty()
 
 # Обновление контейнера с помощью метода container.button()
-if show_image_container.button('Show Image', key='show_image_button_' + str(show_image)) and len(images) > 0:
+show_image_button_key = 'show_image_button_' + str(show_image) + '_0'
+if show_image_container.button('Show Image', key=show_image_button_key) and len(images) > 0:
     show_image = True
 
 # Индекс текущего изображения
@@ -45,7 +46,8 @@ if show_image:
 
 # Отображение кнопки "Show Image", если изображение скрыто
 if not show_image and len(images) > 0:
-    show_image_container.button('Show Image', key='show_image_button_' + str(show_image))
+    show_image_button_key = 'show_image_button_' + str(show_image) + '_1'
+    show_image_container.button('Show Image', key=show_image_button_key)
 
 # Скрытие кнопки "Show Image", если изображение отображается
 if show_image:
