@@ -5,7 +5,7 @@ from PIL import Image
 
 
 def capture_image():
-    st.subheader('Посмотреть изображение')
+    st.subheader('1')
     start_button = st.button('Посмотреть изображения')
     stop_button = st.button('Скрыть изображения', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
@@ -14,7 +14,7 @@ def capture_image():
 
 # Функция для загрузки нескольких изображений
 def upload_images():
-    st.subheader('загрузить изображение')
+    st.subheader('2')
 
     
     sentence_image_files = st.file_uploader('Select Images', ['jpg', 'png'], accept_multiple_files=True)
@@ -31,7 +31,7 @@ def upload_images():
 
 # Создание веб-приложения
 st.title('')
-option = st.sidebar.selectbox('Select an option', ('Посмотреть изображение', 'загрузить изображение'))
+option = st.sidebar.selectbox('Select an option', ('1', '2'))
 
 if option == 'Capture an image':
     capture_image()
