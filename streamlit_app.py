@@ -11,9 +11,10 @@ def capture_image():
     FRAME_WINDOW = st.image([])
 
     if start_button:
-       
+        # code to start camera
 
     if stop_button:
+        # code to capture image
        
 
 # Функция для загрузки нескольких изображений
