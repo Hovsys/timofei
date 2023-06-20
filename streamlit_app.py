@@ -10,12 +10,14 @@ def capture_image():
     run_button = st.button('Run')
     stop_button = st.button('Stop', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
-    num_cameras = cv2.VideoCapture.getCameraCount()
-    camera_index = st.selectbox('Select a camera', range(num_cameras))
-    camera = cv2.VideoCapture(camera_index)
-    if not camera.isOpened():
-        st.error('Cannot open camera')
+    camera_indexes = [i for i in range(10)]
+    cameras = [cv2.VideoCapture(index, cv2.CAP_DSHOW) for index in camera_indexes]
+    available_cameras = [index for index, camera in enumerate(cameras) if camera.isOpened()]
+    if len(available_cameras) == 0:
+        st.error('No cameras available')
         return
+    camera_index = st.selectbox('Select a camera', available_cameras)
+    camera = cameras[camera_index]
     while run_button:
         _, frame = camera.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -24,6 +26,8 @@ def capture_image():
             stop_button.disabled = False
         run_button = st.button('Run', key='run_capture', disabled=True)
     camera.release()
+    for camera in cameras:
+        camera.release()
     if stop_button is not None:
         stop_button.disabled = True
     run_button = st.button('Run', key='run_capture', disabled=False)
