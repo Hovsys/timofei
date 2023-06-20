@@ -7,7 +7,7 @@ from PIL import Image
 def capture_image():
     st.subheader('Capture an image')
     start_button = st.button('Включить камеру')
-    stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
+    stop_button = st.button('Сделать снимок', key=f'stop_capture_{time.time()}', disabled=True)
     FRAME_WINDOW = st.image([])
 
     if start_button:
@@ -38,8 +38,6 @@ st.title('ASL Recognition App')
 option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
 
 if option == 'Capture an image':
-    # Перенесем создание кнопки "Сделать снимок" перед вызовом функции capture_image()
-    stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
-    capture_image()
+     capture_image()
 else:
     upload_images()
