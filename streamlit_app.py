@@ -28,6 +28,5 @@ def capture_image():
 # Создание веб-приложения
 st.title('')
 
-    capture_image()
-else:
-    upload_images()
+   
+
