@@ -11,6 +11,9 @@ def capture_image():
     stop_button = st.button('Stop', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
     camera = cv2.VideoCapture(0)
+    if not camera.isOpened():
+        st.error('Cannot open camera')
+        return
     while run_button:
         _, frame = camera.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
