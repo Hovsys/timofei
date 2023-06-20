@@ -1,26 +1,54 @@
 import streamlit as st
+import cv2
+from PIL import Image
+import numpy as np
 
-st.markdown('You can find the Convolutional Neural Netowrk used [here](https://github.com/Sathwick-Reddy-M/Sign-Language-Recognition)')
-st.markdown('For a detailed explaination please refer [this](https://towardsdatascience.com/sign-language-to-text-using-deep-learning-7f9c8018c593) article')
-st.markdown('Use 28x28 images (size of the training images) to obtain the accurate results')
+# Функция для загрузки изображения
+def load_image(image_file):
+    img = Image.open(image_file)
+    return img
 
-st.subheader('Convert Image to English letter')
-image_file = st.file_uploader('Choose the ASL Image', ['jpg', 'png'])
+# Функция для обработки изображения и получения результата
+def preprocess_image(image, model, binarizer):
+    # ... код обработки изображения ...
+    return result
 
-if image_file is not None:
-    image = Image.open(image_file).convert('L')
-    image = np.array(image, dtype='float32')
-    letter = preprocess_image(image, image_file, best_model, label_binarizer)
-    st.write(f'The image is predicted as {letter}')
+# Загружаем модель и бинаризатор
+model = load_model()
+binarizer = load_binarizer()
 
-st.subheader('Convert images to English sentence')
-sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files = True)
+# Загружаем страницу
+def app():
+    st.title('ASL to English Translation')
 
-if len(sentence_image_files) > 0:
-    sentence = ''
-    for image_file in sentence_image_files:
-        image = Image.open(image_file).convert('L')
+    # Добавляем возможность загрузки изображения с компьютера
+    st.subheader('Translate ASL Image to English Letter')
+    image_file = st.file_uploader('Choose the ASL Image', ['jpg', 'jpeg', 'png'])
+    if image_file is not None:
+        image = load_image(image_file)
         image = np.array(image, dtype='float32')
-        letter = preprocess_image(image, image_file, best_model, label_binarizer)
-        sentence += letter
-    st.write(f'The sentence is predicted as {sentence}')
+        letter = preprocess_image(image, model, binarizer)
+        st.write(f'The image is predicted as {letter}')
+
+    # Добавляем возможность получения изображения с веб-камеры
+    st.subheader('Capture Image from Webcam')
+    run = st.checkbox('Run')
+    FRAME_WINDOW = st.image([])
+    camera = cv2.VideoCapture(0)
+    while run:
+        _, frame = camera.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        FRAME_WINDOW.image(frame)
+        if st.button("Capture"):
+            cv2.imwrite('captured_image.png', frame)
+            image = load_image('captured_image.png')
+            image = np.array(image, dtype='float32')
+            letter = preprocess_image(image, model, binarizer)
+            st.write(f'The image is predicted as {letter}')
+            st.success("Image captured!")
+        if st.button("Quit"):
+            run = False
+    camera.release()
+
+if __name__ == '__main__':
+    app()
