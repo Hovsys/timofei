@@ -5,7 +5,7 @@ from PIL import Image
 
 
 def capture_image():
-    st.subheader('Capture an image')
+    st.subheader('Посмотреть изображение')
     start_button = st.button('Посмотреть изображения')
     stop_button = st.button('Скрыть изображения', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
