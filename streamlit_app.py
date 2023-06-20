@@ -14,7 +14,9 @@ def capture_image():
 
 # Функция для загрузки нескольких изображений
 def upload_images():
+    st.subheader('загрузить изображение')
 
+    
     sentence_image_files = st.file_uploader('Select Images', ['jpg', 'png'], accept_multiple_files=True)
 
     if len(sentence_image_files) > 0:
