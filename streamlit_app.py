@@ -40,7 +40,7 @@ if show_image:
     if col3.button('Выключить  режим  фото', key='camera_button'):
         st.write('Turn Off Camera Button Clicked')
 
-    st.markdown('Use 28x28 images (size of the training images) to obtain the accurate results')
+    st.markdown('Полеченный перевод:')
 
     # Скрытие кнопки "Show Image", если изображение отображается
     show_image_container.empty()
