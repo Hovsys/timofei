@@ -40,6 +40,7 @@ def upload_images():
             sentence += letter
         st.write(f'The sentence is predicted as {sentence}')
 
+
 # Создание веб-приложения
 st.title('ASL Recognition App')
 option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
