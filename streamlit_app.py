@@ -45,7 +45,7 @@ if show_image:
     if col3.button('Выключить  режим  фото', key='camera_button'):
         st.write('Turn Off Camera Button Clicked')
 
-    st.markdown('Полеченный перевод: a b')
+    st.markdown('Полеченный перевод: ab')
    
     # Скрытие кнопки "Show Image", если изображение отображается
     show_image_container.empty()
