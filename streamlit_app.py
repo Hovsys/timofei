@@ -4,7 +4,7 @@ from PIL import Image
 st.title('Режим фотографии')
 
 # Загрузка изображений
-uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True)
+uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True, key='image_uploader')
 
 
 # Список с загруженными изображениями
@@ -30,8 +30,7 @@ current_image_index = 0
 
 # Отображение изображения, если флаг установлен в True
 if show_image:
-    st.image(images[current_image_index], caption='Сделайте фотографию жеста', 
-         use_column_width=True, caption_style={'color': 'black'})
+    st.image(images[current_image_index], caption='Сделайте фотографию жеста', use_column_width=True, caption_style={'color': 'black'})
 
     # Кнопки для переключения между изображениями
     col1, col2, col3 = st.columns(3)
