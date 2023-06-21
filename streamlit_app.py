@@ -30,7 +30,7 @@ current_image_index = 0
 
 # Отображение изображения, если флаг установлен в True
 if show_image:
-    st.image(images[current_image_index], caption='Сделайте фотографию жеста', use_column_width=True, caption_style={'color': 'black'})
+    st.image(images[current_image_index], caption='Сделайте фотографию жеста', use_column_width=True)
 
     # Кнопки для переключения между изображениями
     col1, col2, col3 = st.columns(3)
