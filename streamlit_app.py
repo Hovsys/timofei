@@ -4,7 +4,7 @@ from PIL import Image
 st.title('Режим фотографии')
 
 # Загрузка изображений
-uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True, key='image_uploader')
+uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True)
 
 
 # Список с загруженными изображениями
@@ -46,7 +46,7 @@ if show_image:
     if col3.button('Выключить  режим  фото', key='camera_button'):
         st.write('Turn Off Camera Button Clicked')
 
-    st.markdown('Полеченный перевод: abk')
+    st.markdown('Полученный перевод: abk')
    
     # Скрытие кнопки "Show Image", если изображение отображается
     show_image_container.empty()
