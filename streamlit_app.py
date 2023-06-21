@@ -1,49 +1,55 @@
+import cv2
+import numpy as np
 import streamlit as st
 from PIL import Image
- 
-st.title('Photo Mode')
 
-# Image upload
-uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True, key='image_uploader')
 
-# List of uploaded images
-images = []
-for uploaded_file in uploaded_files:
-    image = Image.open(uploaded_file)
-    images.append(image)
-    
-# Flag to show/hide image
-show_image = False
+# Функция для захвата изображения с камеры
+def capture_image():
+    st.subheader('Capture an image')
+    start_button = st.button('Включить камеру')
+    stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
+    FRAME_WINDOW = st.image([])
 
-# Create an empty container for the "Show Image" button
-show_image_container = st.empty()
+    # Открыть первую доступную камеру
+    camera = cv2.VideoCapture(0)
+    if not camera.isOpened():
+        st.error('Unable to Access Camera')
+        return
 
-# Update the container using the container.button() method
-if show_image_container.button(' On Camera', key='show_image_button_' + str(show_image)) and len(images) > 0:
-    show_image = True
+    while start_button:
+        _, frame = camera.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        FRAME_WINDOW.image(frame)
+        if stop_button is not None:
+            stop_button.disabled = False
+        start_button = st.button('Включить камеру', key='run_capture', disabled=True)
+    camera.release()
+    if stop_button is not None:
+        stop_button.disabled = True
+    start_button = st.button('Включить камеру', key='run_capture', disabled=False)
 
-# Current image index
-current_image_index = 0
 
-# Display the image if the flag is set to True
-if show_image:
-    st.image(images[current_image_index], use_column_width=True)
-    st.markdown('<p align="center">Take a photo of the gesture</p>', unsafe_allow_html=True)
+# Функция для загрузки нескольких изображений
+def upload_images():
+    st.subheader('Convert images to English sentence')
+    sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files=True)
 
-    # Buttons to switch between images
-    col1, col2, col3 = st.columns(3)
-    if col2.button('Take Photo of Gesture', key='previous_button'):
-        current_image_index = (current_image_index - 1) % len(images)
-    if col2.button('Next Gesture', key='next_button'):
-        current_image_index = (current_image_index + 1) % len(images)
+    if len(sentence_image_files) > 0:
+        sentence = ''
+        for image_file in sentence_image_files:
+            image = Image.open(image_file).convert('L')
+            image = np.array(image, dtype='float32')
+            letter = preprocess_image(image, image_file, best_model, label_binarizer)
+            sentence += letter
+        st.write(f'The sentence is predicted as {sentence}')
 
-    # Buttons to undo last letter and turn off camera
-    if col3.button('Undo Last Letter', key='undo_button'):
-        st.write('Undo Last Letter Button Clicked')
-    if col3.button('Turn Off Photo Mode', key='camera_button'):
-        st.write('Turn Off Camera Button Clicked')
 
-    st.markdown('The predicted translation is: abk')
-   
-    # Hide the "Show Image" button if the image is displayed
-    show_image_container.empty()
+# Создание веб-приложения
+st.title('ASL Recognition App')
+option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
+
+if option == 'Capture an image':
+    capture_image()
+else:
+    upload_images()
