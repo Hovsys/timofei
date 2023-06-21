@@ -6,7 +6,7 @@ from PIL import Image
 
 # Функция для захвата изображения с камеры
 def capture_image():
-    st.subheader('Capture an image')
+    st.subheader('photography mode')
     start_button = st.button('Включить камеру')
     stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
     FRAME_WINDOW = st.image([])
@@ -65,7 +65,7 @@ option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert 
 
 language = st.sidebar.selectbox('Select a language', ('Russian', 'ASL'))
 
-if option == 'Capture an image':
+if option == 'photography mode':
     capture_image()
 else:
     upload_images(language)
