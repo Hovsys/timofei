@@ -31,25 +31,41 @@ def capture_image():
 
 
 # Функция для загрузки нескольких изображений
-def upload_images():
-    st.subheader('Convert images to English sentence')
-    sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files=True)
+def upload_images(language):
+    if language == 'ASL':
+        st.subheader('Convert images to English sentence')
+        sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files=True)
 
-    if len(sentence_image_files) > 0:
-        sentence = ''
-        for image_file in sentence_image_files:
-            image = Image.open(image_file).convert('L')
-            image = np.array(image, dtype='float32')
-            letter = preprocess_image(image, image_file, best_model, label_binarizer)
-            sentence += letter
-        st.write(f'The sentence is predicted as {sentence}')
+        if len(sentence_image_files) > 0:
+            sentence = ''
+            for image_file in sentence_image_files:
+                image = Image.open(image_file).convert('L')
+                image = np.array(image, dtype='float32')
+                letter = preprocess_image(image, image_file, best_model, label_binarizer)
+                sentence += letter
+            st.write(f'The sentence is predicted as {sentence}')
+
+    else:
+        st.subheader('Конвертировать изображения в русские предложения')
+        sentence_image_files = st.file_uploader('Выберите изображения', ['jpg', 'png'], accept_multiple_files=True)
+
+        if len(sentence_image_files) > 0:
+            sentence = ''
+            for image_file in sentence_image_files:
+                image = Image.open(image_file).convert('L')
+                image = np.array(image, dtype='float32')
+                letter = preprocess_image_russian(image, image_file, russian_model, russian_label_binarizer)
+                sentence += letter
+            st.write(f'Предложение распознано как {sentence}')
 
 
 # Создание веб-приложения
 st.title('ASL Recognition App')
 option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
 
+language = st.sidebar.selectbox('Select a language', ('Russian', 'ASL'))
+
 if option == 'Capture an image':
     capture_image()
 else:
-    upload_images()
+    upload_images(language)
