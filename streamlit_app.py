@@ -19,7 +19,7 @@ show_image = False
 show_image_container = st.empty()
 
 # Update the container using the container.button() method
-if show_image_container.button('Turn On Camera', key='show_image_button_' + str(show_image)) and len(images) > 0:
+if show_image_container.button(' On Camera', key='show_image_button_' + str(show_image)) and len(images) > 0:
     show_image = True
 
 # Current image index
