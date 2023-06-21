@@ -61,7 +61,7 @@ def upload_images(language):
 
 # Создание веб-приложения
 st.title('ASL Recognition App')
-option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
+option = st.sidebar.selectbox('Select an option', ('photography mode', 'Convert images to English sentence'))
 
 language = st.sidebar.selectbox('Select a language', ('Russian', 'ASL'))
 
