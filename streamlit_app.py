@@ -1,49 +1,55 @@
+import cv2
+import numpy as np
 import streamlit as st
 from PIL import Image
- 
-st.title('Режим фотографии')
 
-# Загрузка изображений
-uploaded_files = st.sidebar.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True, key='image_uploader')
 
-# Список с загруженными изображениями
-images = []
-for uploaded_file in uploaded_files:
-    image = Image.open(uploaded_file)
-    images.append(image)
-    
-# Флаг для отображения/скрытия изображения
-show_image = False
+# Функция для захвата изображения с камеры
+def capture_image():
+    st.subheader('Capture an image')
+    start_button = st.button('Включить камеру')
+    stop_button = st.button('Сделать снимок', key='stop_capture', disabled=True)
+    FRAME_WINDOW = st.image([])
 
-# Создание пустого контейнера для кнопки "Show Image"
-show_image_container = st.empty()
+    # Открыть первую доступную камеру
+    camera = cv2.VideoCapture(0)
+    if not camera.isOpened():
+        st.error('Unable to Access Camera')
+        return
 
-# Обновление контейнера с помощью метода container.button()
-if show_image_container.button('Включить камеру', key='show_image_button_' + str(show_image)) and len(images) > 0:
-    show_image = True
+    while start_button:
+        _, frame = camera.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        FRAME_WINDOW.image(frame)
+        if stop_button is not None:
+            stop_button.disabled = False
+        start_button = st.button('Включить камеру', key='run_capture', disabled=True)
+    camera.release()
+    if stop_button is not None:
+        stop_button.disabled = True
+    start_button = st.button('Включить камеру', key='run_capture', disabled=False)
 
-# Индекс текущего изображения
-current_image_index = 0
 
-# Отображение изображения, если флаг установлен в True
-if show_image:
-    st.image(images[current_image_index], use_column_width=True)
-    st.markdown('<p align="center">Сделайте фотографию жеста</p>', unsafe_allow_html=True)
+# Функция для загрузки нескольких изображений
+def upload_images():
+    st.subheader('Convert images to English sentence')
+    sentence_image_files = st.file_uploader('Select the ASL Images', ['jpg', 'png'], accept_multiple_files=True)
 
-    # Кнопки для переключения между изображениями
-    col1, col2, col3 = st.columns(3)
-    if col2.button('Сделать фото жеста', key='previous_button'):
-        current_image_index = (current_image_index - 1) % len(images)
-    if col2.button('Следующий жест', key='next_button'):
-        current_image_index = (current_image_index + 1) % len(images)
+    if len(sentence_image_files) > 0:
+        sentence = ''
+        for image_file in sentence_image_files:
+            image = Image.open(image_file).convert('L')
+            image = np.array(image, dtype='float32')
+            letter = preprocess_image(image, image_file, best_model, label_binarizer)
+            sentence += letter
+        st.write(f'The sentence is predicted as {sentence}')
 
-    # Кнопки для отмены последней буквы и выключения камеры
-    if col3.button('Удалить последнюю букву', key='undo_button'):
-        st.write('Undo Last Letter Button Clicked')
-    if col3.button('Выключить режим фото', key='camera_button'):
-        st.write('Turn Off Camera Button Clicked')
 
-    st.markdown('Полученный перевод: abk')
-   
-    # Скрытие кнопки "Show Image", если изображение отображается
-    show_image_container.empty()
+# Создание веб-приложения
+st.title('ASL Recognition App')
+option = st.sidebar.selectbox('Select an option', ('Capture an image', 'Convert images to English sentence'))
+
+if option == 'Capture an image':
+    capture_image()
+else:
+    upload_images()
